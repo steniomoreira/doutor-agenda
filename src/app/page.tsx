@@ -1,3 +1,9 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
-  return <h1 className="flex text-lime-600">Aloha Nalu</h1>;
+  return (
+    <div>
+      <Button>Clique</Button>
+    </div>
+  );
 }
