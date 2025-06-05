@@ -60,7 +60,7 @@ function SignInForm() {
       {
         onSuccess: () => {
           route.push("/dashboard");
-          toast.success("Seja bem-vindo, Stenio!");
+          toast.success("Seja bem-vindo");
         },
         onError: () => {
           toast.error("Dados inválidos!");
