@@ -1,7 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, LogIn } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 const signInSchema = z.object({
   email: z
@@ -36,6 +40,8 @@ const signInSchema = z.object({
 });
 
 function SignInForm() {
+  const route = useRouter();
+
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -44,8 +50,23 @@ function SignInForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+
+      {
+        onSuccess: () => {
+          route.push("/dashboard");
+          toast.success("Seja bem-vindo, Stenio!");
+        },
+        onError: () => {
+          toast.error("Dados inválidos!");
+        },
+      },
+    );
   }
 
   return (
@@ -93,7 +114,14 @@ function SignInForm() {
             />
           </CardContent>
           <CardFooter className="justify-end">
-            <Button type="submit">Login</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? (
+                <Loader2 className="mr-1 h-2 w-2 animate-spin" />
+              ) : (
+                <LogIn className="mr-1 h-2 w-2" />
+              )}
+              Login
+            </Button>
           </CardFooter>
         </form>
       </Form>
