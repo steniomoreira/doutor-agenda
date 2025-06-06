@@ -42,6 +42,7 @@ const registerSchema = z.object({
 
 function SignUpForm() {
   const router = useRouter();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -77,7 +78,7 @@ function SignUpForm() {
   return (
     <Card>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <CardHeader>
             <CardTitle>Criar conta</CardTitle>
             <CardDescription>Crie uma conta para continuar</CardDescription>
