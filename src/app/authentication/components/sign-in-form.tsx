@@ -2,11 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, LogIn } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import googleIcon from "@/assets/google-icon.svg";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -50,13 +52,12 @@ function SignInForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof signInSchema>) {
+  async function handleSubmit(values: z.infer<typeof signInSchema>) {
     await authClient.signIn.email(
       {
         email: values.email,
         password: values.password,
       },
-
       {
         onSuccess: () => {
           route.push("/dashboard");
@@ -69,10 +70,17 @@ function SignInForm() {
     );
   }
 
+  async function handleGoogleLogin() {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
+  }
+
   return (
     <Card>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>Faça login para continuar</CardDescription>
@@ -113,14 +121,28 @@ function SignInForm() {
               )}
             />
           </CardContent>
-          <CardFooter className="justify-end">
-            <Button type="submit" disabled={form.formState.isSubmitting}>
+          <CardFooter className="flex flex-col gap-4">
+            <Button
+              className="w-full"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+            >
               {form.formState.isSubmitting ? (
                 <Loader2 className="mr-1 h-2 w-2 animate-spin" />
               ) : (
                 <LogIn className="mr-1 h-2 w-2" />
               )}
-              Login
+              Entrar
+            </Button>
+
+            <Button
+              className="w-full"
+              onClick={handleGoogleLogin}
+              variant="secondary"
+              type="button"
+            >
+              <Image src={googleIcon} alt="google" className="mr-2 h-4 w-4" />
+              Entrar com o Google
             </Button>
           </CardFooter>
         </form>
