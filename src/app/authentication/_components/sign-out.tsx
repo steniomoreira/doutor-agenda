@@ -8,7 +8,7 @@ import { authClient } from "@/lib/auth-client";
 function SignOutButton() {
   const route = useRouter();
 
-  function signOut() {
+  const signOut = () => {
     authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
@@ -16,7 +16,7 @@ function SignOutButton() {
         },
       },
     });
-  }
+  };
 
   return <Button onClick={signOut}>Sair</Button>;
 }

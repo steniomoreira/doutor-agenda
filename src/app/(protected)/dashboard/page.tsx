@@ -2,11 +2,10 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import SignOutButton from "@/app/authentication/_components/sign-out";
 import { db } from "@/db";
 import { usersToClinicsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-
-import SignOutButton from "../authentication/components/sign-out";
 
 async function DashboadPage() {
   const session = await auth.api.getSession({
