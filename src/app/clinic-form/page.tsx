@@ -1,4 +1,4 @@
-import { DialogClinicForm } from "./componets/dialog-clinic-form";
+import { DialogClinicForm } from "./components/dialog-clinic-form";
 
 function ClinicForm() {
   return <DialogClinicForm />;
