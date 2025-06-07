@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -93,7 +94,19 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <DropdownMenu>
-          <DropdownMenuTrigger>Clinic</DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton size="lg">
+              <Avatar>
+                <AvatarFallback>SM</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-sm">STN DEV Clinic</p>
+                <p className="text-muted-foreground text-sm">
+                  steniomoreiradev@gmail.com
+                </p>
+              </div>
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem className="text-rose-500" onClick={signOut}>
               <LogOut className="text-rose-500" />
