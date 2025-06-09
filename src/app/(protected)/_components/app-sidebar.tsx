@@ -106,7 +106,7 @@ export function AppSidebar() {
                 <AvatarFallback>SM</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm">{session?.user.clinic.name}</p>
+                <p className="text-sm">{session?.user?.clinic?.name}</p>
                 <p className="text-muted-foreground text-sm">
                   {session?.user.email}
                 </p>
