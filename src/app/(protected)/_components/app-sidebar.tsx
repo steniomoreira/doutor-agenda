@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,6 +57,7 @@ const items = [
 
 export function AppSidebar() {
   const route = useRouter();
+  const { data: session } = authClient.useSession();
 
   const signOut = () => {
     authClient.signOut({
@@ -97,12 +98,16 @@ export function AppSidebar() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton size="lg">
               <Avatar>
+                <AvatarImage
+                  src={session?.user.image || ""}
+                  alt={session?.user.name}
+                />
                 <AvatarFallback>SM</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm">STN DEV Clinic</p>
+                <p className="text-sm">{session?.user.clinic.name}</p>
                 <p className="text-muted-foreground text-sm">
-                  steniomoreiradev@gmail.com
+                  {session?.user.email}
                 </p>
               </div>
             </SidebarMenuButton>
